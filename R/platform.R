@@ -99,6 +99,7 @@ detect_r_version <- function() {
   release <- which_r_version("r-release")
   oldrel <- which_r_version("r-oldrel")
   myself <- my_r_version()
+  fallback <- "r-release"
 
   if (grepl("Under development", R.version$status)) {
     "r-devel"
@@ -111,7 +112,8 @@ detect_r_version <- function() {
   } else if (R.version$status == "" && myself == oldrel) {
     "r-oldrel"
   } else {
-    NA_character_
+    warning("Could not detect R version from online database, falling back to ", fallback)
+    fallback
   }
 }
 
